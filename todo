@@ -1,0 +1,3 @@
+Tester le déplacement du robot vers une zone non connue pour voir si le robot la consodère comme infranchissable => bug possible
+
+Voir pour mockito
