@@ -17,7 +17,7 @@ public class BatteryTest {
     //PARTIE STRUCTURELLE
 
     @Rule
-    public org.junit.rules.ExpectedException e = ExpectedException.none();
+    public ExpectedException e = ExpectedException.none();
 
     @Test
     public void testGetChargeLevel() throws Exception {
