@@ -5,9 +5,18 @@ import static robot.Direction.*;
 public class MapTools {
 
     static Coordinates nextForwardPosition(Coordinates position, Direction direction) {
+        /*
+            Mauvais : quand on est au nord et qu'on va tout droit,
+            on doit monter soit faire Y - 1 et l'inverse pour le sud
+
         if (direction == NORTH)
             return new Coordinates(position.getX(), position.getY() + 1);
         if (direction == SOUTH)
+            return new Coordinates(position.getX(), position.getY() - 1);
+        */
+        if (direction == SOUTH)
+            return new Coordinates(position.getX(), position.getY() + 1);
+        if (direction == NORTH)
             return new Coordinates(position.getX(), position.getY() - 1);
         if (direction == EAST)
             return new Coordinates(position.getX() + 1, position.getY());
@@ -15,9 +24,18 @@ public class MapTools {
     }
 
     static Coordinates nextBackwardPosition(Coordinates position, Direction direction) {
+        /*
+
+            Même remarque que précedemment
         if (direction == NORTH)
             return new Coordinates(position.getX(), position.getY() - 1);
         if (direction == SOUTH)
+            return new Coordinates(position.getX(), position.getY() + 1);
+         */
+
+        if (direction == SOUTH)
+            return new Coordinates(position.getX(), position.getY() - 1);
+        if (direction == NORTH)
             return new Coordinates(position.getX(), position.getY() + 1);
         if (direction == EAST)
             return new Coordinates(position.getX() - 1, position.getY());
