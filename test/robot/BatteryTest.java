@@ -1,9 +1,12 @@
 package robot;
 
-import org.junit.Test;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.Assert;
 import org.junit.rules.ExpectedException;
+
+
+
 
 
 /**
@@ -44,7 +47,11 @@ public class BatteryTest {
 
     @Test
     public void testSetUp() throws Exception {
-        //je sais pas trop comment tester le timer, ça a l'air tendu
+        //je sais pas trop comment tester le timer, ça a l'air pourrave
+        Battery b = new Battery();
+        b.setUp();
+        Thread.sleep(2000);
+        Assert.assertEquals("on devrait être à 120",120, b.getChargeLevel(), 0.001);
     }
 
     @Test
