@@ -1,6 +1,8 @@
 package robot;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,7 +12,9 @@ import org.junit.Test;
  * To change this template use File | Settings | File Templates.
  */
 public class LandSensorTest {
+
     @Test
     public void testGetPointToPointEnergyCoefficient() throws Exception {
+
     }
 }

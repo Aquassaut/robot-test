@@ -35,45 +35,54 @@ public class Robot {
     }
 
     public int getXposition() throws UnlandedRobotException {
-        if (!isLanded) throw new UnlandedRobotException();
+        if (!isLanded)
+            throw new UnlandedRobotException();
         return position.getX();
     }
 
     public int getYposition() throws UnlandedRobotException {
-        if (!isLanded) throw new UnlandedRobotException();
+        if (!isLanded)
+            throw new UnlandedRobotException();
         return position.getY();
     }
 
     public Direction getDirection() throws UnlandedRobotException {
-        if (!isLanded) throw new UnlandedRobotException();
+        if (!isLanded)
+            throw new UnlandedRobotException();
         return direction;
     }
 
     public void moveForward() throws UnlandedRobotException, InsufficientChargeException, LandSensorDefaillance, InaccessibleCoordinate {
-        if (!isLanded) throw new UnlandedRobotException();
+        if (!isLanded)
+            throw new UnlandedRobotException();
         moveTo(MapTools.nextForwardPosition(position, direction));
     }
 
     public void moveBackward() throws UnlandedRobotException, InsufficientChargeException, LandSensorDefaillance, InaccessibleCoordinate {
-        if (!isLanded) throw new UnlandedRobotException();
+        if (!isLanded)
+            throw new UnlandedRobotException();
         moveTo(MapTools.nextBackwardPosition(position, direction));
     }
 
     private void moveTo(Coordinates nextPosition) throws InsufficientChargeException, LandSensorDefaillance, InaccessibleCoordinate {
         double neededEnergy = 0;
-            neededEnergy = landSensor.getPointToPointEnergyCoefficient(position, nextPosition) * energyConsumption;
-        if (!cells.canDeliver(neededEnergy)) throw new InsufficientChargeException();
+        neededEnergy = landSensor.getPointToPointEnergyCoefficient(position, nextPosition) * energyConsumption;
+        if (!cells.canDeliver(neededEnergy))
+            throw new InsufficientChargeException();
         cells.use(neededEnergy);
         position = nextPosition;
     }
 
     public void turnLeft() throws UnlandedRobotException {
-        if (!isLanded) throw new UnlandedRobotException();
+        if (!isLanded)
+            throw new UnlandedRobotException();
         direction = MapTools.counterclockwise(direction);
     }
 
     public void turnRight() throws UnlandedRobotException {
-        if (!isLanded) throw new UnlandedRobotException();
+        if (!isLanded)
+            throw new UnlandedRobotException();
+
         direction = MapTools.clockwise(direction);
     }
 
@@ -82,18 +91,24 @@ public class Robot {
     }
 
     public void letsGo() throws UnlandedRobotException, UndefinedRoadbookException, InsufficientChargeException, LandSensorDefaillance, InaccessibleCoordinate {
-        if (roadBook == null) throw new UndefinedRoadbookException();
+        if (roadBook == null)
+            throw new UndefinedRoadbookException();
         while (roadBook.hasInstruction()) {
             Instruction nextInstruction = roadBook.next();
-            if (nextInstruction == FORWARD) moveForward();
-            else if (nextInstruction == BACKWARD) moveBackward();
-            else if (nextInstruction == TURNLEFT) turnLeft();
-            else if (nextInstruction == TURNRIGHT) turnRight();
+            if (nextInstruction == FORWARD)
+                moveForward();
+            else if (nextInstruction == BACKWARD)
+                moveBackward();
+            else if (nextInstruction == TURNLEFT)
+                turnLeft();
+            else if (nextInstruction == TURNRIGHT)
+                turnRight();
         }
     }
 
     public void computeRoadTo(Coordinates destination) throws UnlandedRobotException {
-        if (!isLanded) throw new UnlandedRobotException();
+        if (!isLanded)
+            throw new UnlandedRobotException();
         setRoadBook(calculateRoadBook(direction, position, destination, new ArrayList<Instruction>()));
     }
 
