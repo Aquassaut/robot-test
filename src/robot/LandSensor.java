@@ -30,7 +30,8 @@ public class LandSensor {
             }
         Land terrain1 = carte.get(coordinate1);
         Land terrain2 = carte.get(coordinate2);
-        if (terrain2==Land.Infranchissable) throw new InaccessibleCoordinate(coordinate2);
+        if (terrain2==Land.Infranchissable)
+            throw new InaccessibleCoordinate(coordinate2);
         return (terrain1.coefficient+terrain2.coefficient)/2.0;
     }
 
