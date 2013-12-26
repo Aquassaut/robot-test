@@ -52,6 +52,12 @@ public class Robot {
         return direction;
     }
 
+    public RoadBook getRoadBook() throws UnlandedRobotException {
+        if (!isLanded)
+            throw new UnlandedRobotException();
+        return roadBook;
+    }
+
     public void moveForward() throws UnlandedRobotException, InsufficientChargeException, LandSensorDefaillance, InaccessibleCoordinate {
         if (!isLanded)
             throw new UnlandedRobotException();

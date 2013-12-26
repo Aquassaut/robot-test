@@ -190,4 +190,57 @@ public class RobotTest {
         unLandedR.computeRoadTo(null);
         e = ExpectedException.none();
     }
+
+    // Test fonctionnel
+    ////////////////////
+
+    @Test
+    public void testRobotVersLeNordParDefaut() throws Exception {
+        landedR = new Robot();
+        landedR.land(new Coordinates(0,0), new LandSensor(terre));
+        Assert.assertEquals("Le robot devrait être au Nord au démarrage", Direction.NORTH, landedR.getDirection());
+    }
+
+    @Test
+    public void testRobotAvantGardeDirection() throws Exception {
+        landedR = new Robot();
+        landedR.land(new Coordinates(0,0), new LandSensor(terre));
+        landedR.setRoadBook(new RoadBook(new ArrayList<Instruction>() {{
+            add(Instruction.FORWARD); //face: nord, pos : 0,-1
+        }}));
+        landedR.letsGo();
+        Assert.assertEquals("on devrait avoir un x de 0", 0, landedR.getXposition());
+        Assert.assertEquals("on devrait avoir un y de -1", -1, landedR.getYposition());
+        Assert.assertEquals("on devrait faire face au nord", Direction.NORTH, landedR.getDirection());
+    }
+
+    @Test
+    public void testRobotArriereGardeDirection() throws Exception {
+        landedR = new Robot();
+        landedR.land(new Coordinates(0,0), new LandSensor(terre));
+        landedR.setRoadBook(new RoadBook(new ArrayList<Instruction>() {{
+            add(Instruction.BACKWARD); //face: nord, pos : 0,-1
+        }}));
+        landedR.letsGo();
+        Assert.assertEquals("on devrait avoir un x de 0", 0, landedR.getXposition());
+        Assert.assertEquals("on devrait avoir un y de 1", 1, landedR.getYposition());
+        Assert.assertEquals("on devrait faire face au nord", Direction.NORTH, landedR.getDirection());
+    }
+
+    // Test si la marche avant est priviliégiée alors qu'il n'y a pas d'obstacle
+    @Test
+    public void testRobotArriereQueSiObstacle() throws Exception {
+        landedR = new Robot();
+        landedR.land(new Coordinates(0, 0), new LandSensor(terre));
+        landedR.computeRoadTo(new Coordinates(10, 10));
+
+        RoadBook roadbook = landedR.getRoadBook();
+        Instruction instruction;
+
+        while(roadbook.hasInstruction())
+        {
+            instruction = roadbook.next();
+            Assert.assertNotSame("Le robot ne doit reculer qu'en cas d'obstacle", instruction, Instruction.BACKWARD);
+        }
+    }
 }
