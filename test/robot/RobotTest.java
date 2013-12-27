@@ -243,4 +243,51 @@ public class RobotTest {
             Assert.assertNotSame("Le robot ne doit reculer qu'en cas d'obstacle", instruction, Instruction.BACKWARD);
         }
     }
+
+    // Test si la rotation la plus optimisée est choisie (donc pas 3 fois la même à la suite)
+    @Test
+    public void testRotationLaPlusOptimisee() throws Exception {
+        landedR = new Robot();
+        landedR.land(new Coordinates(0, 0), new LandSensor(terre));
+        landedR.computeRoadTo(new Coordinates(10, -10));
+
+        RoadBook roadbook = landedR.getRoadBook();
+        Instruction instruction;
+        Instruction oldInstruction = null;
+        Boolean test2sameInstruct = false;
+
+        while(roadbook.hasInstruction())
+        {
+            instruction = roadbook.next();
+            if(((instruction == Instruction.TURNLEFT) || (instruction == Instruction.TURNRIGHT)) && instruction == oldInstruction)
+            {
+                Assert.assertTrue("Le robot doit utiliser la rotation la plus adaptée", test2sameInstruct);
+                test2sameInstruct = true;
+            }
+            else
+                test2sameInstruct = false;
+
+            oldInstruction = instruction;
+        }
+    }
+
+    // Test avec exemple donné par les specs
+    @Test
+    public void testRobotParcoursConnu() throws Exception {
+        landedR = new Robot();
+        landedR.land(new Coordinates(5, 5), new LandSensor(terre));
+        landedR.computeRoadTo(new Coordinates(4, 4));
+
+        RoadBook roadbook = landedR.getRoadBook();
+        Instruction instruction;
+
+        instruction = roadbook.next();
+        Assert.assertEquals("Le robot doit aller en avant", instruction, Instruction.FORWARD);
+
+        instruction = roadbook.next();
+        Assert.assertEquals("Le robot doit aller à gauche", instruction, Instruction.TURNLEFT);
+
+        instruction = roadbook.next();
+        Assert.assertEquals("Le robot doit aller en avant", instruction, Instruction.FORWARD);
+    }
 }
