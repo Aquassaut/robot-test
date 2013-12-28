@@ -227,6 +227,7 @@ public class RobotTest {
         Assert.assertEquals("on devrait faire face au nord", Direction.NORTH, landedR.getDirection());
     }
 
+<<<<<<< HEAD
     // Test si la marche avant est priviliégiée alors qu'il n'y a pas d'obstacle
     @Test
     public void testRobotArriereQueSiObstacle() throws Exception {
@@ -277,4 +278,6 @@ public class RobotTest {
         instruction = roadbook.next();
         Assert.assertEquals("Le robot doit aller à gauche", instruction, Instruction.TURNLEFT);
     }
+=======
+>>>>>>> 69767f91663b6a1267326fa3a710a790b67f45fe
 }

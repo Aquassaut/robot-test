@@ -93,4 +93,62 @@ public class RoadBookCalculatorTest {
          */
     }
 
+
+    // Test si la marche avant est priviliégiée alors qu'il n'y a pas d'obstacle
+    @Test
+    public void testRobotArriereQueSiObstacle() throws Exception {
+        c1 = new Coordinates(0, 0);
+        c2 = new Coordinates(10, 10);
+        rb = RoadBookCalculator.calculateRoadBook(n, c1, c2, new ArrayList<Instruction>());
+
+        while(rb.hasInstruction())
+        {
+            Assert.assertNotSame("Le robot ne doit reculer qu'en cas d'obstacle", rb.next(), Instruction.BACKWARD);
+        }
+    }
+
+    // Test si la rotation la plus optimisée est choisie (donc pas 3 fois la même à la suite)
+    @Test
+    public void testRotationLaPlusOptimisee() throws Exception {
+        c1 = new Coordinates(0, 0);
+        c2 = new Coordinates(10, -10);
+        rb = RoadBookCalculator.calculateRoadBook(n, c1, c2, new ArrayList<Instruction>());
+
+        Instruction instruction;
+        Instruction oldInstruction = null;
+        Boolean test2sameInstruct = false;
+
+        while(rb.hasInstruction())
+        {
+            instruction = rb.next();
+            if(((instruction == Instruction.TURNLEFT) || (instruction == Instruction.TURNRIGHT)) && instruction == oldInstruction)
+            {
+                Assert.assertTrue("Le robot doit utiliser la rotation la plus adaptée", test2sameInstruct);
+                test2sameInstruct = true;
+            }
+            else
+                test2sameInstruct = false;
+
+            oldInstruction = instruction;
+        }
+    }
+
+    // Test avec exemple donné par les specs
+    @Test
+    public void testRobotParcoursConnu() throws Exception {
+        c1 = new Coordinates(5, 5);
+        c1 = new Coordinates(4, 4);
+
+        rb = RoadBookCalculator.calculateRoadBook(n, c1, c2, new ArrayList<Instruction>());
+        Instruction instruction;
+
+        instruction = rb.next();
+        Assert.assertEquals("Le robot doit aller en avant", Instruction.FORWARD, instruction);
+
+        instruction = rb.next();
+        Assert.assertEquals("Le robot doit aller à gauche",  Instruction.TURNLEFT, instruction);
+
+        instruction = rb.next();
+        Assert.assertEquals("Le robot doit aller en avant",  Instruction.FORWARD, instruction);
+    }
 }
