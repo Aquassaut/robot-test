@@ -107,37 +107,33 @@ public class RoadBookCalculatorTest {
         }
     }
 
-    // Test si la rotation la plus optimisée est choisie (donc pas 3 fois la même à la suite)
+    // Test si la rotation la plus optimisée est choisie dans le cas où le robot doit tourner à gauche
     @Test
-    public void testRotationLaPlusOptimisee() throws Exception {
+    public void testRotationLaPlusOptimiseeGauche() throws Exception {
         c1 = new Coordinates(0, 0);
-        c2 = new Coordinates(10, -10);
+        c2 = new Coordinates(-1, 0);
         rb = RoadBookCalculator.calculateRoadBook(n, c1, c2, new ArrayList<Instruction>());
 
-        Instruction instruction;
-        Instruction oldInstruction = null;
-        Boolean test2sameInstruct = false;
+        Instruction instruction = rb.next();
+        Assert.assertEquals("Le robot doit aller à gauche", instruction, Instruction.TURNLEFT);
+    }
 
-        while(rb.hasInstruction())
-        {
-            instruction = rb.next();
-            if(((instruction == Instruction.TURNLEFT) || (instruction == Instruction.TURNRIGHT)) && instruction == oldInstruction)
-            {
-                Assert.assertTrue("Le robot doit utiliser la rotation la plus adaptée", test2sameInstruct);
-                test2sameInstruct = true;
-            }
-            else
-                test2sameInstruct = false;
+    // Test si la rotation la plus optimisée est choisie dans le cas où le robot doit tourner à droite
+    @Test
+    public void testRotationLaPlusOptimiseeDroite() throws Exception {
+        c1 = new Coordinates(0, 0);
+        c2 = new Coordinates(1, 0);
+        rb = RoadBookCalculator.calculateRoadBook(n, c1, c2, new ArrayList<Instruction>());
 
-            oldInstruction = instruction;
-        }
+        Instruction instruction = rb.next();
+        Assert.assertEquals("Le robot doit aller à droite", instruction, Instruction.TURNRIGHT);
     }
 
     // Test avec exemple donné par les specs
     @Test
     public void testRobotParcoursConnu() throws Exception {
         c1 = new Coordinates(5, 5);
-        c1 = new Coordinates(4, 4);
+        c2 = new Coordinates(4, 4);
 
         rb = RoadBookCalculator.calculateRoadBook(n, c1, c2, new ArrayList<Instruction>());
         Instruction instruction;

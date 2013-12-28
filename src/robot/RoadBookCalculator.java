@@ -27,8 +27,6 @@ public class RoadBookCalculator {
             on doit aller au NORTH pas au SOUTH. et inversément
             C'est cohérent avec les changements faits à MapTools.java
             basés sur le même motif
-
-            La rotation se faisait toujours à droite -> ajout if/else pour utiliser la rotation la plus optimisée
          */
         if (destination.getY() > position.getY())
             directionList.add(Direction.SOUTH);
@@ -37,7 +35,16 @@ public class RoadBookCalculator {
 
         if (directionList.isEmpty())
             return new RoadBook(instructions);
+        /*
+            Version originale du code :
+            =============================
         if (directionList.contains(direction)) {
+
+            Justification des modifications :
+            ===================================
+            Il faut que ça soit la dernière direction de la liste qui match avec la direction actuelle
+        */
+        if (directionList.get(directionList.size() - 1) == direction) {
             instructions.add(FORWARD);
             return calculateRoadBook(direction, MapTools.nextForwardPosition(position, direction), destination, instructions);
         } else {
