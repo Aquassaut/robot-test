@@ -116,4 +116,49 @@ public class LandSensorTest {
         e.expect(LandSensorDefaillance.class);
         ls.getPointToPointEnergyCoefficient(src,dst);
     }
+
+    // Test la consommation de batterie dans la roche
+    @Test
+    public void testConsoRoche() throws Exception {
+        double result;
+
+        rand = mock(Random.class);
+        when(rand.nextInt(anyInt())).thenReturn(1);
+        ls = new LandSensor(rand);
+        src = new Coordinates(0, 0);
+        dst = new Coordinates(1, 0);
+
+        result = ls.getPointToPointEnergyCoefficient(src, dst);
+        Assert.assertEquals("Ca devrait faire ~2", 2, result, 0.001);
+    }
+
+    // Test la consommation de batterie dans le sable
+    @Test
+    public void testConsoSable() throws Exception {
+        double result;
+
+        rand = mock(Random.class);
+        when(rand.nextInt(anyInt())).thenReturn(2);
+        ls = new LandSensor(rand);
+        src = new Coordinates(0, 0);
+        dst = new Coordinates(1, 0);
+
+        result = ls.getPointToPointEnergyCoefficient(src, dst);
+        Assert.assertEquals("Ca devrait faire ~4", 4, result, 0.001);
+    }
+
+    // Test la consommation de batterie dans la boue
+    @Test
+    public void testConsoBoue() throws Exception {
+        double result;
+
+        rand = mock(Random.class);
+        when(rand.nextInt(anyInt())).thenReturn(3);
+        ls = new LandSensor(rand);
+        src = new Coordinates(0, 0);
+        dst = new Coordinates(1, 0);
+
+        result = ls.getPointToPointEnergyCoefficient(src, dst);
+        Assert.assertEquals("Ca devrait faire ~3", 3, result, 0.001);
+    }
 }
