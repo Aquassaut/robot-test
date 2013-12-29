@@ -172,7 +172,7 @@ public class LandSensorTest {
         src = new Coordinates(0, 0);
         dst = new Coordinates(1, 0);
 
-        e.expect(InaccessibleCoordinate.class);
+        e.expect(LandSensorDefaillance.class);
         ls.getPointToPointEnergyCoefficient(src, dst);
     }
 

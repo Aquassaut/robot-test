@@ -30,11 +30,11 @@ public class LandSensor {
             }
         Land terrain1 = carte.get(coordinate1);
         Land terrain2 = carte.get(coordinate2);
-        // Ajout d'un test dans le cas où le point 1 est infranchissable
-        if (terrain1 == Land.Infranchissable)
-            throw new InaccessibleCoordinate(coordinate1);
         if (terrain2==Land.Infranchissable)
             throw new InaccessibleCoordinate(coordinate2);
+        // Ajout d'un test dans le cas où le point 1 est infranchissable, signifiant un LandSensorDefaillance
+        if (terrain1 == Land.Infranchissable)
+            throw new LandSensorDefaillance();
         return (terrain1.coefficient+terrain2.coefficient)/2.0;
     }
 
