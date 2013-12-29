@@ -231,11 +231,22 @@ public class RobotTest {
     @Test
     public void testDeplacementHorsZoneConnue() throws Exception {
         landedR = new Robot();
-        landedR.land(new Coordinates(0,0), new LandSensor(terre));
-        landedR.computeRoadTo(new Coordinates(10,0));
+        landedR.land(new Coordinates(0, 0), new LandSensor(terre));
+        landedR.computeRoadTo(new Coordinates(10, 0));
         landedR.letsGo();
         Assert.assertEquals("on devrait avoir un x de 10", 10, landedR.getXposition());
         Assert.assertEquals("on devrait avoir un y de 0", 0, landedR.getYposition());
     }
 
+    // Test de si le robot adapte son parcours en fonction du terrain
+    // Si le robot renvoie une exception, cela veut dire qu'il ne s'adapte pas au terrain
+    @Test
+    public void testAdaptationRoadbookAuTerrain() throws Exception {
+        landedR = new Robot();
+        Random rand = mock(Random.class);
+        when(rand.nextInt(anyInt())).thenReturn(0, 4, 0, 0);
+        landedR.land(new Coordinates(0,0), new LandSensor(rand));
+        landedR.computeRoadTo(new Coordinates(3,0));
+        landedR.letsGo();
+    }
 }

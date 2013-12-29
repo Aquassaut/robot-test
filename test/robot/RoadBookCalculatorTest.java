@@ -147,4 +147,21 @@ public class RoadBookCalculatorTest {
         instruction = rb.next();
         Assert.assertEquals("Le robot doit aller en avant",  Instruction.FORWARD, instruction);
     }
+
+    // Test si le parcours est optimisé sur un terrain uniforme sans obstacle
+    @Test
+    public void testParcoursTerrainUniformeSansObstacle() throws Exception {
+        c1 = new Coordinates(0, 0);
+        c2 = new Coordinates(4, 4);
+
+        rb = RoadBookCalculator.calculateRoadBook(n, c1, c2, new ArrayList<Instruction>());
+        int i = 0;
+        while(rb.hasInstruction())
+        {
+            rb.next();
+            i++;
+        }
+        Assert.assertEquals("Le parcours doit contenir 8 instructions pour être optimisé",
+                            10, i);
+    }
 }

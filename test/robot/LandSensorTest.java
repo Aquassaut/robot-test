@@ -5,6 +5,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.rmi.UnexpectedException;
 import java.util.Random;
 
 import static org.mockito.Mockito.*;
@@ -162,9 +163,22 @@ public class LandSensorTest {
         Assert.assertEquals("Ca devrait faire ~3", 3, result, 0.001);
     }
 
+    // Test getPointToPointEnergyCoefficient dans le cas où la position initiale est "Infranchissable"
+    @Test
+    public void testGetEnergyCoefficientCoorInitialeInfranch() throws Exception {
+        rand = mock(Random.class);
+        when(rand.nextInt(anyInt())).thenReturn(4,0);
+        ls = new LandSensor(rand);
+        src = new Coordinates(0, 0);
+        dst = new Coordinates(1, 0);
+
+        e.expect(InaccessibleCoordinate.class);
+        ls.getPointToPointEnergyCoefficient(src, dst);
+    }
+
     // Test si getPointToPointEnergyCoefficient pour un point trop loin renvoie RuntimeException("Point trop distant")
     @Test
-    public void testGetEnergyCoefficientParcoursConnu() throws Exception {
+    public void testGetEnergyCoefficientHorsZone() throws Exception {
         rand = mock(Random.class);
         when(rand.nextInt(anyInt())).thenReturn(0);
         ls = new LandSensor(rand);
@@ -174,4 +188,17 @@ public class LandSensorTest {
         e.expect(RuntimeException.class);
         ls.getPointToPointEnergyCoefficient(src, dst);
     }
+
+    // Test getPointToPointEnergyCoefficient ne renvoie pas d'exception pour un point dans la zone connue
+    @Test
+    public void testGetEnergyCoefficientDansZone() throws Exception {
+        rand = mock(Random.class);
+        when(rand.nextInt(anyInt())).thenReturn(0);
+        ls = new LandSensor(rand);
+        src = new Coordinates(0, 0);
+        dst = new Coordinates(3, 0);
+
+        ls.getPointToPointEnergyCoefficient(src, dst);
+    }
+
 }
