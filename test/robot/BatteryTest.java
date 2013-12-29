@@ -50,7 +50,7 @@ public class BatteryTest {
         //je sais pas trop comment tester le timer, ça a l'air pourrave
         Battery b = new Battery();
         b.setUp();
-        Thread.sleep(2000);
+        Thread.sleep(1500);
         Assert.assertEquals("on devrait être à 120",120, b.getChargeLevel(), 0.001);
     }
 
