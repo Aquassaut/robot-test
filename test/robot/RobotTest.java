@@ -226,4 +226,16 @@ public class RobotTest {
         Assert.assertEquals("on devrait avoir un y de 1", 1, landedR.getYposition());
         Assert.assertEquals("on devrait faire face au nord", Direction.NORTH, landedR.getDirection());
     }
+
+    // Test de computeRoadto vers un point en dehors de la zone connue (9x9)
+    @Test
+    public void testDeplacementHorsZoneConnue() throws Exception {
+        landedR = new Robot();
+        landedR.land(new Coordinates(0,0), new LandSensor(terre));
+        landedR.computeRoadTo(new Coordinates(10,0));
+        landedR.letsGo();
+        Assert.assertEquals("on devrait avoir un x de 10", 10, landedR.getXposition());
+        Assert.assertEquals("on devrait avoir un y de 0", 0, landedR.getYposition());
+    }
+
 }

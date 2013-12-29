@@ -114,7 +114,7 @@ public class LandSensorTest {
         ls.getPointToPointEnergyCoefficient(src, src);
         dst = new Coordinates(0, 1);
         e.expect(LandSensorDefaillance.class);
-        ls.getPointToPointEnergyCoefficient(src,dst);
+        ls.getPointToPointEnergyCoefficient(src, dst);
     }
 
     // Test la consommation de batterie dans la roche
@@ -160,5 +160,18 @@ public class LandSensorTest {
 
         result = ls.getPointToPointEnergyCoefficient(src, dst);
         Assert.assertEquals("Ca devrait faire ~3", 3, result, 0.001);
+    }
+
+    // Test si getPointToPointEnergyCoefficient pour un point trop loin renvoie RuntimeException("Point trop distant")
+    @Test
+    public void testGetEnergyCoefficientParcoursConnu() throws Exception {
+        rand = mock(Random.class);
+        when(rand.nextInt(anyInt())).thenReturn(0);
+        ls = new LandSensor(rand);
+        src = new Coordinates(0, 0);
+        dst = new Coordinates(10, 0);
+
+        e.expect(RuntimeException.class);
+        ls.getPointToPointEnergyCoefficient(src, dst);
     }
 }
