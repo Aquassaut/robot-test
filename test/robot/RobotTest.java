@@ -238,8 +238,13 @@ public class RobotTest {
         Assert.assertEquals("on devrait avoir un y de 0", 0, landedR.getYposition());
     }
 
-    // Test de si le robot adapte son parcours en fonction du terrain
-    // Si le robot renvoie une exception, cela veut dire qu'il ne s'adapte pas au terrain
+    /* Test de si le robot adapte son parcours en fonction du terrain
+       Si le robot renvoie une exception, cela veut dire qu'il ne s'adapte pas au terrain */
+    /*
+        Pas de Fix implémenté car l'implémentation de feature serait trop importante et provoquerait de gros
+        changements dans le code (le code testé serait alors trop différent du code original, modifiant l'exercice).
+     */
+
     @Test
     public void testAdaptationRoadbookAuTerrain() throws Exception {
         landedR = new Robot();

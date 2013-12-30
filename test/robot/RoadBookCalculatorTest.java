@@ -108,6 +108,9 @@ public class RoadBookCalculatorTest {
     }
 
     // Test si la rotation la plus optimisée est choisie dans le cas où le robot doit tourner à gauche
+    /*
+        Echec du test, fix effectué dans calculateRoadBook();
+     */
     @Test
     public void testRotationLaPlusOptimiseeGauche() throws Exception {
         c1 = new Coordinates(0, 0);
@@ -130,6 +133,9 @@ public class RoadBookCalculatorTest {
     }
 
     // Test avec exemple donné par les specs
+    /*
+        Echec du test, fix effectué dans calculateRoadBook();
+     */
     @Test
     public void testRobotParcoursConnu() throws Exception {
         c1 = new Coordinates(5, 5);

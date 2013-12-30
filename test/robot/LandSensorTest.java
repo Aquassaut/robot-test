@@ -164,6 +164,9 @@ public class LandSensorTest {
     }
 
     // Test getPointToPointEnergyCoefficient dans le cas où la position initiale est "Infranchissable"
+    /*
+        Echec du test, fix effectué dans getPointToPointEnergyCoefficient()
+     */
     @Test
     public void testGetEnergyCoefficientCoorInitialeInfranch() throws Exception {
         rand = mock(Random.class);
@@ -177,6 +180,12 @@ public class LandSensorTest {
     }
 
     // Test si getPointToPointEnergyCoefficient pour un point trop loin renvoie RuntimeException("Point trop distant")
+    /*
+        Pas de fix implémenté car il faudrait faire de l'implémentation de feature : si on interdit de générer le
+        terrain pour un point trop éloignée de la position actuelle, il faudrait aussi implémenter une cartographie
+        complète de la zone de 9x9 dans laquelle se trouve le robot après chaque déplacement (et donc créer une
+        nouvelle méthode pour ne jamais recevoir l'exception InaccessibleCoordonateException).
+     */
     @Test
     public void testGetEnergyCoefficientHorsZone() throws Exception {
         rand = mock(Random.class);
