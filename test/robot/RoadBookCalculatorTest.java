@@ -252,7 +252,7 @@ public class RoadBookCalculatorTest {
             rb.next();
             i++;
         }
-        Assert.assertEquals("Le parcours doit contenir 8 instructions pour être optimisé",
+        Assert.assertEquals("Le parcours doit contenir 10 instructions pour être optimisé",
                             10, i);
     }
 }
