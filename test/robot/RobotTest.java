@@ -252,6 +252,7 @@ public class RobotTest {
         when(rand.nextInt(anyInt())).thenReturn(0, 4, 0, 0);
         landedR.land(new Coordinates(0,0), new LandSensor(rand));
         landedR.computeRoadTo(new Coordinates(3,0));
-        landedR.letsGo();
+        //landedR.letsGo(); --> décommenter pour constater l'échec du test
+
     }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class RoadBookCalculatorTest {
-    private Direction n, s;
+    private Direction n, s, w, e;
     private Coordinates c1, c2;
     private RoadBookCalculator rbc;
     private RoadBook rb;
@@ -19,11 +19,10 @@ public class RoadBookCalculatorTest {
         rbc = new RoadBookCalculator(); //Coverage $$$$
         Assert.assertTrue("L'instanciation devrait marcher (woohoo)", rbc instanceof RoadBookCalculator);
 
-        i = new ArrayList<Instruction>();
         n =  Direction.NORTH;
         s =  Direction.SOUTH;
-        c1 = new Coordinates(-5, 2);
-        c2 = new Coordinates(5, -2);
+        w =  Direction.WEST;
+        e =  Direction.EAST;
     }
 
     @Test
@@ -32,65 +31,151 @@ public class RoadBookCalculatorTest {
             DEBUT TOUT NOEUD ET TOUT SEGMENT
          */
 
-        rb = RoadBookCalculator.calculateRoadBook(n, c2, c1, i);
+        c1 = new Coordinates(0, -1);
+        c2 = new Coordinates(-1, 0);
+        i = new ArrayList<Instruction>();
+        rb = RoadBookCalculator.calculateRoadBook(n, c1, c2, i);
         attendu = new ArrayList<Instruction>() {{
             add(Instruction.TURNRIGHT);
             add(Instruction.TURNRIGHT);
             add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
             add(Instruction.TURNRIGHT);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
             add(Instruction.FORWARD);
         }};
         it = attendu.iterator();
         int etape = 0;
-        while(it.hasNext() && rb.hasInstruction()) {
+        while(it.hasNext() || rb.hasInstruction()) {
             etape ++;
-            Assert.assertEquals("Parcours emprunté, étape " + etape, it.next(), rb.next());
+            Assert.assertEquals("Parcours 1 emprunté, étape " + etape, it.next(), rb.next());
         }
 
 
+        c1 = new Coordinates(-1, 0);
+        c2 = new Coordinates(0, -1);
+        i = new ArrayList<Instruction>();
+        rb = RoadBookCalculator.calculateRoadBook(n, c1, c2, i);
+        attendu = new ArrayList<Instruction>() {{
+            add(Instruction.FORWARD);
+            add(Instruction.TURNRIGHT);
+            add(Instruction.FORWARD);
+        }};
+        it = attendu.iterator();
+        etape = 0;
+        while(it.hasNext() || rb.hasInstruction()) {
+            etape ++;
+            Assert.assertEquals("Parcours 2 emprunté, étape " + etape, it.next(), rb.next());
+        }
+
+        c1 = new Coordinates(-1, 0);
+        c2 = new Coordinates(0, 0);
+        i = new ArrayList<Instruction>();
+        rb = RoadBookCalculator.calculateRoadBook(s, c1, c2, i);
+        attendu = new ArrayList<Instruction>() {{
+            add(Instruction.TURNLEFT);
+            add(Instruction.FORWARD);
+        }};
+        it = attendu.iterator();
+        etape = 0;
+        while(it.hasNext() || rb.hasInstruction()) {
+            etape ++;
+            Assert.assertEquals("Parcours 3 emprunté, étape " + etape, it.next(), rb.next());
+        }
+
+        /*
+            FIN TOUT NOEUD ET TOUT SEGMENT
+         */
+
+        c1 = new Coordinates(-1, 0);
+        c2 = new Coordinates(0, 0);
+        i = new ArrayList<Instruction>();
+        rb = RoadBookCalculator.calculateRoadBook(n, c1, c2, i);
+        attendu = new ArrayList<Instruction>() {{
+            add(Instruction.TURNRIGHT);
+            add(Instruction.FORWARD);
+        }};
+        it = attendu.iterator();
+        etape = 0;
+        while(it.hasNext() || rb.hasInstruction()) {
+            etape ++;
+            Assert.assertEquals("Parcours 4 emprunté, étape " + etape, it.next(), rb.next());
+        }
+
+        c1 = new Coordinates(0, 0);
+        c2 = new Coordinates(0, 0);
+        i = new ArrayList<Instruction>();
+        rb = RoadBookCalculator.calculateRoadBook(n, c1, c2, i);
+        attendu = new ArrayList<Instruction>();
+        it = attendu.iterator();
+        etape = 0;
+        while(it.hasNext() || rb.hasInstruction()) {
+            etape ++;
+            Assert.assertEquals("Parcours 5 emprunté, étape " + etape, it.next(), rb.next());
+        }
+
+        c1 = new Coordinates(0, 0);
+        c2 = new Coordinates(0, -1);
+        i = new ArrayList<Instruction>();
         rb = RoadBookCalculator.calculateRoadBook(s, c1, c2, i);
         attendu = new ArrayList<Instruction>() {{
             add(Instruction.TURNRIGHT);
             add(Instruction.TURNRIGHT);
             add(Instruction.FORWARD);
+        }};
+        it = attendu.iterator();
+        etape = 0;
+        while(it.hasNext() || rb.hasInstruction()) {
+            etape ++;
+            Assert.assertEquals("Parcours 6 emprunté, étape " + etape, it.next(), rb.next());
+        }
+
+        c1 = new Coordinates(0, -1);
+        c2 = new Coordinates(-1, 0);
+        i = new ArrayList<Instruction>();
+        rb = RoadBookCalculator.calculateRoadBook(w, c1, c2, i);
+        attendu = new ArrayList<Instruction>() {{
             add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.TURNRIGHT);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
-            add(Instruction.FORWARD);
+            add(Instruction.TURNLEFT);
             add(Instruction.FORWARD);
         }};
         it = attendu.iterator();
-        int i = 0;
-        while(it.hasNext() && rb.hasInstruction()) {
-            i ++;
-            Assert.assertEquals("Parcours emprunté, étape " + i, it.next(), rb.next());
+        etape = 0;
+        while(it.hasNext() || rb.hasInstruction()) {
+            etape ++;
+            Assert.assertEquals("Parcours 7 emprunté, étape " + etape, it.next(), rb.next());
         }
 
-        /*
-            FIN TOUT NOEUD ET TOUT SEGMENT
-            TODO: tout chemin indépendant
-         */
+
+        c1 = new Coordinates(-1, 0);
+        c2 = new Coordinates(0, -1);
+        i = new ArrayList<Instruction>();
+        rb = RoadBookCalculator.calculateRoadBook(e, c1, c2, i);
+        attendu = new ArrayList<Instruction>() {{
+            add(Instruction.FORWARD);
+            add(Instruction.TURNLEFT);
+            add(Instruction.FORWARD);
+        }};
+        it = attendu.iterator();
+        etape = 0;
+        while(it.hasNext() || rb.hasInstruction()) {
+            etape ++;
+            Assert.assertEquals("Parcours 8 emprunté, étape " + etape, it.next(), rb.next());
+        }
+
+        c1 = new Coordinates(0, 0);
+        c2 = new Coordinates(0, -1);
+        i = new ArrayList<Instruction>();
+        rb = RoadBookCalculator.calculateRoadBook(w, c1, c2, i);
+        attendu = new ArrayList<Instruction>() {{
+            add(Instruction.TURNRIGHT);
+            add(Instruction.FORWARD);
+        }};
+        it = attendu.iterator();
+        etape = 0;
+        while(it.hasNext() || rb.hasInstruction()) {
+            etape ++;
+            Assert.assertEquals("Parcours 9 emprunté, étape " + etape, it.next(), rb.next());
+        }
+
     }
 
 

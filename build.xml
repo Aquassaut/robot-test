@@ -1,0 +1,83 @@
+<project xmlns:jacoco="antlib:org.jacoco.ant">
+
+
+    <path id="classpath">
+        <fileset dir="./lib" includes="*.jar" />
+    </path>
+
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+        <classpath refid="classpath" />
+    </taskdef>
+
+    <path id="testclasspath">
+        <fileset dir="/usr/share/java" includes="jacoco/*.jar" />
+        <fileset dir="./lib" includes="*.jar" />
+        <pathelement location="./jacocobuild/classes/" />
+    </path>
+
+    <path id="junitclasspath">
+        <fileset dir="/usr/share/java" includes="jacoco/*.jar" />
+        <fileset dir="./lib" includes="*.jar" />
+        <pathelement location="./jacocobuild/classes/" />
+        <pathelement location="./jacocobuild/testclasses/" />
+    </path>
+
+    <target name="clean">
+        <delete dir="jacocobuild"/>
+    </target>
+
+    <target name="compile" depends="clean">
+        <mkdir dir="jacocobuild/classes"/>
+        <mkdir dir="jacocobuild/testclasses"/>
+        <javac debug="on" srcdir="src/robot" destdir="jacocobuild/classes">
+            <classpath>
+                <path refid="classpath" />
+            </classpath>
+        </javac>
+        <javac  debug="on" srcdir="test/robot" destdir="jacocobuild/testclasses">
+            <classpath>
+                <path refid="testclasspath" />
+            </classpath>
+        </javac>
+    </target>
+
+
+    <target name="runtest" depends="compile">
+        <jacoco:coverage>
+            <junit fork="true" forkmode="once">
+                <classpath>
+                    <path refid="junitclasspath" />
+                </classpath>
+                <test name="robot.BatteryTest" />
+                <test name="robot.CoordinatesTest" />
+                <test name="robot.LandSensorTest" />
+                <test name="robot.LandTest" />
+                <test name="robot.MapToolsTest" />
+                <test name="robot.RoadBookCalculatorTest" />
+                <test name="robot.RoadBookTest" />
+                <test name="robot.RobotTest" />
+ 
+            </junit>
+        </jacoco:coverage>
+        <echo message="Ici si ça merde avec java.lang.IncompatibleClassChangeError il faut mettre asm-all-4.2.jar dans le $ANT_HOME" />
+        <jacoco:report>
+            <executiondata>
+                <file file="jacoco.exec"/>
+            </executiondata>
+                                
+            <structure name="robot">
+                <classfiles>
+                    <fileset dir="./jacocobuild/classes/"/>
+                </classfiles>
+                <sourcefiles encoding="UTF-8">
+                    <fileset dir="./src"/>
+                </sourcefiles>
+            </structure>
+                                
+            <html destdir="jacoco-report"/>
+                                
+        </jacoco:report>
+    </target>
+
+</project>
+

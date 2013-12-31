@@ -17,8 +17,6 @@ import org.junit.rules.ExpectedException;
  */
 public class BatteryTest {
 
-    //PARTIE STRUCTURELLE
-
     @Rule
     public ExpectedException e = ExpectedException.none();
 
@@ -97,5 +95,4 @@ public class BatteryTest {
             b.canDeliver(99)
         );
     }
-    //FIN PARTIE STRUCTURELLE
 }
